@@ -1,11 +1,10 @@
 
 const { generateTimer } = require("../utils/generateTimer")
-const wpp = require("../../utils/whatsapp")
-const functions = require("../../utils/functions")
+const wpp = require("../utils/whatsapp")
+const functions = require("../utils/functions")
 
 
 module.exports = async (ctx, { state,  extensions, flowDynamic, provider }) => {
-
 
 
     let mensaje

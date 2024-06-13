@@ -2,7 +2,7 @@ const { Telegraf } = require('telegraf')
 const { message } = require('telegraf/filters')
 const db = require("./bd")
 const { ObjectId } = require('mongodb')
-const { viaje_aceptado_message } = require('./whatsapp')
+const wpp = require('./whatsapp')
 const AI_functions = require("./AI_functions")
 const functions = require("./functions")
 require('dotenv').config();
@@ -93,7 +93,7 @@ const handle_service = async(_id, driver) =>{
             let auxArrayT = chat_historiesT[driver.id]
             auxArrayT.push(mensaje.message_id)
             chat_historiesT[driver.id] = auxArrayT
-            viaje_aceptado_message(ride_info['conductor'], ride_info['d_telefono'], ride_info['placa'], ride_info['vehiculo'], ride_info["telefono"])
+            wpp.viaje_aceptado_message(ride_info['conductor'], ride_info['d_telefono'], ride_info['placa'], ride_info['vehiculo'], ride_info["telefono"])
             // threading.Thread(target=functions.closeByTime, args=(ride_info["telefono"],)).start() // veremos
             setTimeout(() => {
                 functions.closeByTime(ride_info["telefono"])

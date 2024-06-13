@@ -1,4 +1,4 @@
-const  bd = require('./bd');
+const  bd = require('./bd').bot;
 const  telegram = require('./telegram');
 const  AI_functions = require("./AI_functions")
 const  wpp = require('./whatsapp');
@@ -291,6 +291,7 @@ const create_message = async (from_number, user_message) => {
     }
     return mensaje;
   } catch (error) {
+    console.log(error)
     let mensaje = "Lo sentimos estamos teniendo problemas internos por favor intentalo mas tarde."
     return mensaje;
   }

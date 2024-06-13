@@ -1,7 +1,7 @@
 const {  addKeyword, EVENTS } = require('@bot-whatsapp/bot')
 
-const conversationalLayer = ("src/layers/wpp/conversational.layer");
-const mainLayer = ("src/layers/wpp/main.layer");
+const conversationalLayer = require("../layers/conversational.layer");
+const mainLayer = require("../layers/main.layer");
 
 /**
  * Este flow responde a cualquier palabra que escriban

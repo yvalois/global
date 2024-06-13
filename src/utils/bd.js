@@ -41,7 +41,7 @@ const createDriver = async (item) => {
     }
 }
 
-const checkUser = async (user) => {
+async function checkUser(user){
     const myquery = { number: user };
     const items = await collection_name.findOne(myquery);
     if (items) {
@@ -303,6 +303,8 @@ const checkVerifiedD = async (user) => {
     // res.json(items.status); retornar en expresss asi
     return items.status
 }
+
+
 
 module.exports = {
     createUser,
