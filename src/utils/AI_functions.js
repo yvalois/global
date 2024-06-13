@@ -2,7 +2,7 @@ const { OpenAI } = require('openai');
 const bd = require('./bd');
 const telegram = require('./telegram');
 const wpp = require('./whatsapp');
-const functions = require('./fun  ctions');
+const functions = require('./functions');
 require('dotenv').config();
 const { system_for_driver_r, system_for_no_registered, system_for_registered } = require('./prompt');
 
