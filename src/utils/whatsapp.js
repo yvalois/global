@@ -1,12 +1,10 @@
 const {createProvider} = require('@bot-whatsapp/bot')
 const BaileysProvider = require('@bot-whatsapp/provider/baileys')
-
 const AI_functions = require("./AI_functions")
-
 const provider = createProvider(BaileysProvider)
 
-let whatsappUriBase = "https://api.whatsapp.com/send?phone="
 
+let whatsappUriBase = "https://api.whatsapp.com/send?phone="
 let first = {}
 
 const verifyMessage = async(number) => {
