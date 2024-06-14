@@ -1,5 +1,5 @@
-const { path  } = require('@ffmpeg-installer/ffmpeg');
-const ffmpeg = require('fluent-ffmpeg');
+import { path  } from '@ffmpeg-installer/ffmpeg'
+import ffmpeg from 'fluent-ffmpeg'
 
 ffmpeg.setFfmpegPath(path);
 /**
@@ -21,4 +21,4 @@ const convertOggMp3 = async (inputStream, outStream) => {
   });
 };
 
-module.exports =  { convertOggMp3 };
+export  { convertOggMp3 };

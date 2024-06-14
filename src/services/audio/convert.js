@@ -1,6 +1,6 @@
-const fs = require('fs');
-const OpenAI = require("openai");
-require('dotenv').config();
+import fs from 'fs'
+import OpenAI from "openai"
+// require('dotenv').config();
 
 /**
  *
@@ -25,4 +25,4 @@ const voiceToText = async (path) => {
   }
 };
 
-module.exports =  { voiceToText };
+export  { voiceToText };

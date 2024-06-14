@@ -1,35 +1,30 @@
-const { createBot, createProvider, createFlow, addKeyword } = require('@bot-whatsapp/bot')
+import 'dotenv/config'
+import _bot from '@bot-whatsapp/bot'
+const { createBot, createProvider, createFlow, addKeyword } = _bot
+import QRPortalWeb from '@bot-whatsapp/portal'
+import MockAdapter from '@bot-whatsapp/database/mock'
+import AIClass from './services/ai/index.js';
+import flowsW from './flows/index.js';
+import express from 'express'
+import cors from 'cors';
+import bodyParser from 'body-parser';
+import { provider } from './utils/whatsapp.js';
+import  * as db from './utils/bd.js'
+import  * as wpp from './utils/whatsapp.js'
+import  * as AI_functions from './utils/AI_functions.js'
+import {bot} from "./utils/telegram.js"
+import multer from "multer"
+import * as dotenv from 'dotenv';
+dotenv.config();
 
-const QRPortalWeb = require('@bot-whatsapp/portal')
-const BaileysProvider = require('@bot-whatsapp/provider/baileys')
-const MockAdapter = require('@bot-whatsapp/database/mock')
-
-const AIClass = require('./services/ai');
-const flowsW = require('./flows');
-const express = require('express');
-const cors = require('cors');
-const bodyParser = require('body-parser');
-const { provider } = require('./utils/whatsapp');
-const  db = require('./utils/bd')
-const  wpp = require('./utils/whatsapp')
-const  AI_functions = require('./utils/AI_functions')
-const {bot} = require("./utils/telegram")
-const multer = require("multer")
-
-
-require('dotenv').config();
+// require('dotenv').config();
 
 const app = express();
 
-// Middleware
 app.use(cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 const upload = multer({ dest: 'uploads/' });
-// Utiliza el enrutador para las peticiones POST
-
-
-// Inicia el servidor
 const PORT = 5000;
 app.listen(PORT, () => {
   console.log(`Servidor corriendo en el puerto ${PORT}`);
@@ -47,7 +42,7 @@ app.get('/global/api/getusers', async(req, res) => {
 
 app.get('/global/api/getrides', async(req, res) => {
   try {
-    const rides = await db.getRides(); // Asumiendo que envías los datos del conductor a actualizar en el body de la petición
+    const rides = await db.getRides();
     res.json(rides);
   } catch (error) {
     console.log(error)
@@ -57,7 +52,7 @@ app.get('/global/api/getrides', async(req, res) => {
 
 app.put('/global/api/updateuser',upload.single('miFormData'), async(req, res) => {
   try {
-    const updatedUser = await db.updateUser(req.body.number, req.body.status); // Asumiendo que envías los datos del usuario a actualizar en el body de la petición
+    const updatedUser = await db.updateUser(req.body.number, req.body.status); 
     res.json(updatedUser);
   } catch (error) {
     console.log(error)
@@ -68,7 +63,7 @@ app.put('/global/api/updateuser',upload.single('miFormData'), async(req, res) =>
 
 app.delete('/global/api/deleteuser',upload.single('miFormData'), async(req, res) => {
   try {
-    const deletedUser = await db.deleteUser(req.body.number); // Asumiendo que envías el id del usuario a eliminar como un query parameter
+    const deletedUser = await db.deleteUser(req.body.number);
     res.json(deletedUser);
   } catch (error) {
     console.log(error)
@@ -90,7 +85,7 @@ app.get('/global/api/getdrivers', async(req, res) => {
 
 app.put('/global/api/updatedriver',upload.single('miFormData'), async(req, res) => {
   try {
-    const updatedDriver = await db.updateDriver(req.body.number, req.body.status); // Asumiendo que envías los datos del conductor a actualizar en el body de la petición
+    const updatedDriver = await db.updateDriver(req.body.number, req.body.status);
     res.json(updatedDriver);
   } catch (error) {
     console.log(error)
@@ -101,7 +96,7 @@ app.put('/global/api/updatedriver',upload.single('miFormData'), async(req, res) 
 
 app.delete('/global/api/deletedriver',upload.single('miFormData'), async(req, res) => {
   try {
-    const deletedDriver = await db.deleteDriver(req.body.number); // Asumiendo que envías el id del conductor a eliminar como un query parameter
+    const deletedDriver = await db.deleteDriver(req.body.number);
     res.json(deletedDriver);
   } catch (error) {
     console.log(error)
@@ -112,7 +107,7 @@ app.delete('/global/api/deletedriver',upload.single('miFormData'), async(req, re
 
 app.put('/global/api/blockuser',upload.single('miFormData'), async(req, res) => {
   try {
-    const blockUser = await db.blockUser(req.body.number, req.body.block); // Asumiendo que envías los datos del conductor a actualizar en el body de la petición
+    const blockUser = await db.blockUser(req.body.number, req.body.block);
     res.json(blockUser);
   } catch (error) {
     console.log(error)
@@ -146,7 +141,7 @@ const main = async () => {
         flow: flowsW
     }, { extensions: { ai } })
 
-    QRPortalWeb()
+    QRPortalWeb({port:3000})
     bot.launch()
 
     function borrar_conversaciones_antiguas() {

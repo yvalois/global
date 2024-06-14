@@ -138,7 +138,7 @@ const clearHistory = async (_state) => {
 }
 
 
-module.exports = { 
+export { 
     handleHistory, 
     getHistory, 
     getHistoryParse, 

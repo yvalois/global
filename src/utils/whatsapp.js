@@ -1,6 +1,7 @@
-const {createProvider} = require('@bot-whatsapp/bot')
-const BaileysProvider = require('@bot-whatsapp/provider/baileys')
-const AI_functions = require("./AI_functions")
+import _bot from '@bot-whatsapp/bot'
+const { createProvider } = _bot
+import BaileysProvider from '@bot-whatsapp/provider/baileys'
+import * as AI_functions from "./AI_functions.js"
 const provider = createProvider(BaileysProvider)
 
 
@@ -81,7 +82,7 @@ const time_end = async(number) =>{
 
 
 
-module.exports = {
+export {
     provider,
     verifyMessage,
     viaje_message,

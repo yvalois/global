@@ -1,14 +1,14 @@
-const { EVENTS, addKeyword, createFlow } = require("@bot-whatsapp/bot");
-const welcomeFlow = require("./welcome.flow");
-const functions = require("../utils/functions")
-const { downloadMediaMessage } = require('@whiskeysockets/baileys');
-const { convertOggMp3 } = require("../services/audio/whisper");
-const { voiceToText } = require("../services/audio/convert");
-const fs = require('fs');
-const wpp = require("../utils/whatsapp")
-const bd = require("../utils/bd")
-const { generateTimer } = require("../utils/generateTimer")
-
+import _bot from '@bot-whatsapp/bot'
+const { EVENTS, addKeyword, createFlow  } = _bot
+import welcomeFlow from "./welcome.flow.js"
+import * as functions from "../utils/functions.js"
+import { downloadMediaMessage } from '@whiskeysockets/baileys'
+import { convertOggMp3 } from "../services/audio/whisper.js"
+import { voiceToText } from "../services/audio/convert.js"
+import fs from 'fs'
+import * as wpp from "../utils/whatsapp.js"
+import * as bd from "../utils/bd.js"
+import { generateTimer } from "../utils/generateTimer.js"
 
 const handlerAI = async (ctx) => {
     const buffer = await downloadMediaMessage(ctx, "buffer");
@@ -25,19 +25,15 @@ const handlerAI = async (ctx) => {
   const flowAudio = addKeyword(EVENTS.VOICE_NOTE).addAction(async (ctx, { flowDynamic, extensions, state, gotoFlow }) => {
     const text = await handlerAI(ctx);
     let mensaje
-
     let time = new Date();
     wpp.first[ctx.from] = time.getTime();
     mensaje = await functions.create_message(ctx.from, text)
     if(mensaje == "Viaje")  return("All ok")
       else{
-
           if (mensaje !== null && mensaje != undefined && !mensaje.includes("function")){
           await flowDynamic([{ body: mensaje, delay: generateTimer(150, 250) }]);
         }
-
       }
-
   })
 
   function convertCoordinates(decimalCoordinates, isLatitude) {
@@ -116,4 +112,4 @@ const flowCancel = addKeyword("Cancelar").addAction( async (ctx, { state, flowDy
 });
 
 
-module.exports = createFlow([welcomeFlow, flowCancel,  flowAudio, flowUbicacion, flowViaje])
+export default createFlow([welcomeFlow, flowCancel,  flowAudio, flowUbicacion, flowViaje])

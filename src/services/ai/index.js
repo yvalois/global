@@ -1,5 +1,5 @@
-const {   deleteCallId, deleteRunId, getHistory, deleteThread, newThread, getThread } = require("../../utils/handleHistory");
-const OpenAI = require("openai");
+import {   deleteCallId, deleteRunId, getHistory, deleteThread, newThread, getThread } from "../../utils/handleHistory.js"
+import OpenAI from "openai"
 
 
 class AIClass {
@@ -299,4 +299,4 @@ class AIClass {
     };
 }
 
-module.exports = AIClass;
+export default AIClass;

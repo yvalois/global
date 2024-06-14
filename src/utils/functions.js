@@ -1,18 +1,16 @@
-const  bd = require('./bd').bot;
-const  telegram = require('./telegram');
-const  AI_functions = require("./AI_functions")
-const  wpp = require('./whatsapp');
-const { Client, LatLng } = require("@googlemaps/google-maps-services-js");
-const { ObjectId } = require('mongodb')
-require('dotenv').config();
+import  * as bd from './bd.js'
+import  * as telegram from './telegram.js'
+import  * as AI_functions from "./AI_functions.js"
+import  * as wpp from './whatsapp.js'
+import { Client } from "@googlemaps/google-maps-services-js"
+import { ObjectId }from 'mongodb'
+// require('dotenv').config();
 let first = {}
-
 
 const client = new Client({});
 
 
 const finalizar = async (cliente, who) => {
-  // const usuario = await bd.getUser(cliente);
   try {
     const viaje = await bd.getRide(cliente);
     const Auxarray = viaje["finalizar"];
@@ -34,8 +32,6 @@ const finalizar = async (cliente, who) => {
   }
 }
 
-
-
 const cancelar = async (cliente) => {
   try {
   await telegram.eliminarViaje(cliente)
@@ -43,14 +39,9 @@ const cancelar = async (cliente) => {
     let viaje = await bd.getRide(cliente)
     if(viaje){
       if (viaje["estado"] == "aceptado") {
-        // await bd.update_driver_status("libre", viaje["id_Conductor"])
-        // let mensaje = await telegram.cancelMessage(viaje)
-        // await bd.deleteRide(cliente)
         wpp.no_cancel_message(cliente)
       }
       else {
-        // await bd.update_driver_status("libre", viaje["id_Conductor"])
-        // let mensaje = await telegram.cancelMessage(viaje)
         await bd.deleteRide(cliente)
         wpp.cancel_message(cliente)
       }
@@ -74,9 +65,6 @@ const cancelarAdmin = async (cliente, _id, poscicion, viaje) => {
 
     if(viaje){  
       if (viaje["estado"] == "aceptado") {
-        // await bd.update_driver_status("libre", viaje["id_Conductor"])
-        // let mensaje = await telegram.cancelMessage(viaje)
-        // await bd.deleteRide(cliente)
         wpp.no_cancel_message(cliente)
       }
       else {
@@ -99,7 +87,6 @@ const cancelarxtiempo = async (cliente) => {
       let viaje = await bd.getRide(cliente)
       if(viaje){
       await telegram.eliminarViaje(cliente)
-
       if (viaje && viaje["estado"] != "aceptado") {
         await bd.deleteRide(cliente)
         wpp.time_cancel(cliente)
@@ -135,7 +122,6 @@ const borrar_conversaciones_antiguas = async () => {
 }
 
 const closeByTime = async (user) => {
-  // time.sleep(3600)
   setTimeout(async () => {
     try {
       let mensaje = `Por temas de protocolo, hemos finalizado su viaje esto con el fin de mantener un sistema funcional. Si aun se encuentra en el servicio no hay ningun problema podra culminarlo. Este mensaje solo es informativo.`
@@ -145,9 +131,7 @@ const closeByTime = async (user) => {
         await bd.deleteRide(user)
         viaje["estado"] = "Completado"
         await bd.create_end_rides(viaje)
-  
         await bd.update_driver_status("libre", viaje["id_Conductor"])
-        // telegram.eliminarViaje(id_conductor)
         wpp.time_end(user)
         await telegram.end_time_message(id_conductor)
       }
@@ -284,7 +268,6 @@ const create_message = async (from_number, user_message) => {
           mensaje = "Lo sentimos no podemos responder mientras estes en peticion de viaje o en un viaje."
         }
       }
-  
     }
     else {
       mensaje = "No estas verificado cuando te verifiquemos te enviaremos un mensaje"
@@ -295,11 +278,10 @@ const create_message = async (from_number, user_message) => {
     let mensaje = "Lo sentimos estamos teniendo problemas internos por favor intentalo mas tarde."
     return mensaje;
   }
-
 }
 
 
-module.exports = {
+export {
   finalizar,
   cancelar,
   cancelarxtiempo,

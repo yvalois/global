@@ -1,7 +1,7 @@
-const { MongoClient } = require('mongodb');
-const  whatsapp = require('./whatsapp');
-const  telegram = require('./telegram');
-require('dotenv').config();
+import { MongoClient } from 'mongodb'
+import  * as whatsapp from './whatsapp.js'
+import  * as telegram from './telegram.js'
+// require('dotenv').config();
 
 const db_user = process.env.DB_USER;
 const db_pass = process.env.DB_PASS;
@@ -41,7 +41,7 @@ const createDriver = async (item) => {
     }
 }
 
-async function checkUser(user){
+const checkUser = async(user) =>{
     const myquery = { number: user };
     const items = await collection_name.findOne(myquery);
     if (items) {
@@ -90,10 +90,8 @@ const getRidesU = async (number) => {
 const getDrivers = async () => {
     const drivers = await collection_conductores.find().toArray();
     for (const usuario of drivers) {
-        // usuario._id = String(usuario._id);
         usuario._id = usuario._id
     }
-    //   res.json(drivers); retornar en expresss asi
     return drivers
 }
 
@@ -109,7 +107,6 @@ const updateDriver = async (number, status) => {
         await collection_conductores.updateOne(myquery, newvalues);
         const driver = await collection_conductores.findOne(myquery);
         await telegram.verified_message(driver.chat_id);
-        // res.json({ mensaje: 'Felicidades' });
         return "Felicidades"
 
     }
@@ -118,7 +115,6 @@ const updateDriver = async (number, status) => {
 const deleteDriver = async (number) => {
     const myquery = { chat_id: parseInt(number) };
     await collection_conductores.deleteOne(myquery);
-    //   res.json({ mensaje: 'Felicidades' }); retornar en expresss asi
     return "Felicidades"
 }
 
@@ -133,7 +129,6 @@ const updateUser = async (number, status) => {
         const newvalues = { $set: { status: true } };
         await collection_name.updateOne(myquery, newvalues);
         whatsapp.verifyMessage(number);
-        // res.json({ mensaje: 'Felicidades' }); retornar en expresss asi
         return "Felicidades"
     }
 }
@@ -149,7 +144,6 @@ const blockUser = async (number, block) => {
         message = "Debido a un comportamiento inadecuado estas siendo bloqueado."
         const newvalues = { $set: { block: true } };
         await collection_name.updateOne(myquery, newvalues);
-        // res.json({ mensaje: 'Felicidades' }); retornar en expresss asi
     }
     whatsapp.BlockMessage(number, message);
 
@@ -172,8 +166,6 @@ const blockDriver= async (number, status) => {
         message ="Debido a un comportamiento inadecuado estas siendo bloqueado."
         const newvalues = { $set: { block: true } };
         await collection_conductores.updateOne(myquery, newvalues);
-        // res.json({ mensaje: 'Felicidades' });
-    
     }
 
     await telegram.block_message(driver.chat_id, message);
@@ -185,28 +177,27 @@ const deleteUser = async (number) => {
 
     const myquery = { number: number };
     await collection_name.deleteOne(myquery);
-    //res.json({ mensaje: 'Felicidades' }); retornar en expresss asi
 
     return deleteUser
 }
 
 const createRide = async (item) => {
     const created = await collection_viajes.insertOne(item);
-    // res.json(created); retornar en expresss asi
+
     return created
 }
 
 const getUser = async (number) => {
     const myquery = { number: number };
     const usuario = await collection_name.findOne(myquery);
-    // res.json(usuario); retornar en expresss asi
+
     return usuario
 }
 
 const getRide = async (number) => {
     const Ridequery = { telefono: number };
     const viaje = await collection_viajes.findOne(Ridequery);
-    // res.json(viaje); retornar en expresss asi
+
     return viaje
 }
 
@@ -214,7 +205,7 @@ const end_update_ride = async (number, array) => {
     const Ridequery = { telefono: number };
     const newvaluesV = { $set: { finalizar: array } };
     await collection_viajes.updateOne(Ridequery, newvaluesV);
-    //   res.json({ mensaje: 'Felicidades' }); retornar en expresss asi
+
     return "Felicidades"
 }
 
@@ -306,7 +297,7 @@ const checkVerifiedD = async (user) => {
 
 
 
-module.exports = {
+export {
     createUser,
     createDriver,
     checkUser,

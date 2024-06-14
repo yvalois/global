@@ -1,11 +1,13 @@
-const { Telegraf } = require('telegraf')
-const { message } = require('telegraf/filters')
-const db = require("./bd")
-const { ObjectId } = require('mongodb')
-const wpp = require('./whatsapp')
-const AI_functions = require("./AI_functions")
-const functions = require("./functions")
-require('dotenv').config();
+import { Telegraf } from 'telegraf'
+import { message } from 'telegraf/filters'
+import * as db from "./bd.js"
+import { ObjectId } from 'mongodb'
+import * as wpp from './whatsapp.js'
+import * as AI_functions from "./AI_functions.js"
+import * as functions from "./functions.js"
+// require('dotenv').config();
+
+
 const bot = new Telegraf(process.env.TELEGRAM_API)
 const channel_id = process.env.CHANEL_ID
 
@@ -416,7 +418,7 @@ bot.on(message('text'), async (ctx) => {
 
   })
 
-module.exports = {
+export {
     bot,
     inicioMessage,
     handle_service,

@@ -1,11 +1,11 @@
-const {  addKeyword, EVENTS } = require('@bot-whatsapp/bot')
-
-const conversationalLayer = require("../layers/conversational.layer");
-const mainLayer = require("../layers/main.layer");
+import _bot from '@bot-whatsapp/bot'
+const { addKeyword, EVENTS } = _bot
+import conversationalLayer from "../layers/conversational.layer.js"
+import mainLayer from "../layers/main.layer.js"
 
 /**
  * Este flow responde a cualquier palabra que escriban
  */
-module.exports = addKeyword(EVENTS.WELCOME)
+export default addKeyword(EVENTS.WELCOME)
     .addAction(conversationalLayer)
     .addAction(mainLayer)

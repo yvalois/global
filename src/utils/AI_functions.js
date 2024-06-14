@@ -1,10 +1,10 @@
-const { OpenAI } = require('openai');
-const bd = require('./bd');
-const telegram = require('./telegram');
-const wpp = require('./whatsapp');
-const functions = require('./functions');
-require('dotenv').config();
-const { system_for_driver_r, system_for_no_registered, system_for_registered } = require('./prompt');
+import { OpenAI } from 'openai'
+import * as bd from './bd.js'
+import * as telegram from './telegram.js'
+import * as wpp from './whatsapp.js'
+import * as functions from './functions.js'
+// require('dotenv').config();
+import { system_for_driver_r, system_for_no_registered, system_for_registered } from './prompt.js'
 
 
 
@@ -189,7 +189,7 @@ const driverChat = async(chatId, user) => {
 
 }
 
-module.exports = {
+export {
     quitarTildes,
     startAssistant,
     AIInteraction,

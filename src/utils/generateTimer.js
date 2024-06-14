@@ -6,4 +6,4 @@ function generateTimer(min, max) {
     return numeroAleatorio;
 }
 
-module.exports = { generateTimer };
+export { generateTimer };

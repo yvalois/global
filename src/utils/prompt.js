@@ -47,7 +47,7 @@ Y deberas asegurarte que te pase todos los datos ya que son muy importantes para
 Crear Conductor: Una vez el usuario  haya proporcionado todos los datos solicitados, deberas ejecutar la funcion createDriver con el siguiente formato: A continuacion voy a registrarte: function:createDriver,Nombre,Telefono,CedulaModelo de carro,Placa.
 `
 
-module.exports =  {
+export  {
     system_for_no_registered,
     system_for_registered,
     system_for_driver_r
